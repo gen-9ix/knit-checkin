@@ -97,7 +97,7 @@ svg.board{display:block;width:100%;height:auto;overflow:visible;margin-top:4px}
 .note::after{content:"";position:absolute;left:0;right:0;top:0;height:15%;background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0));pointer-events:none}
 .npin{position:absolute;left:50%;top:-6px;transform:translateX(-50%);overflow:visible}
 .kao{font:400 26px/1.2 var(--font-kao);text-align:center;margin:6px 0 8px;white-space:nowrap}
-.note textarea,.note .nt{flex:1;width:100%;margin:0;border:0;background:transparent;resize:none;color:var(--color-ink);font:400 19px/1.65 var(--font-note);padding:0;overflow-wrap:anywhere;
+.note textarea,.note .nt{flex:1;width:100%;margin:0;border:0;background:transparent;resize:none;color:var(--color-ink);font:400 18px/1.6 var(--font-note);padding:0;overflow-wrap:anywhere;
  background-image:linear-gradient(transparent calc(1.65em - 1px),rgba(70,60,50,.14) calc(1.65em - 1px),rgba(70,60,50,.14) 1.65em,transparent 1.65em);background-size:100% 1.65em}
 .note textarea:focus{outline:none}
 .note textarea::placeholder{color:rgba(60,50,40,.45)}
@@ -294,7 +294,7 @@ function noteCard(k,n,editing){
   return `<div class="notewrap" style="--nb:${c.b};--nl:${c.l};--nd:${c.d}"><div class="note">
    <svg class="npin" width="26" height="26" viewBox="-13 -13 26 26" aria-hidden="true">${pin(0,0,'')}</svg>
    <div class="kao">${esc(kao[0])}</div>
-   ${editing?`<textarea id="nt" maxlength="20" rows="2" placeholder="今天想記下什麼？" aria-label="心情小記，最多二十字">${esc(n.t||'')}</textarea><div class="cnt" id="cnt">${[...(n.t||'')].length}/20</div>`:`<p class="nt">${esc(n.t||'')}</p>`}
+   ${editing?`<textarea id="nt" maxlength="40" rows="2" placeholder="今天想記下什麼？" aria-label="心情小記，最多四十字">${esc(n.t||'')}</textarea><div class="cnt" id="cnt">${[...(n.t||'')].length}/40</div>`:`<p class="nt">${esc(n.t||'')}</p>`}
    <div class="nd">${m}月${d}日・${kao[1]}</div></div></div>`}
 function panel(){
   const k=sel||(has(TODAY)&&!noteOf(TODAY)&&ym===THIS_YM?TODAY:null);if(!k||!has(k))return '';
@@ -352,7 +352,7 @@ document.addEventListener('click',e=>{
   if(b.id==='undo'){if(confirmUndo){confirmUndo=false;remove(TODAY)}else{confirmUndo=true;b.textContent='再按一次就拆掉';setTimeout(()=>{confirmUndo=false;if(b.isConnected)b.textContent='拆掉今天這一針'},3000)}return}
   if(b.classList.contains('pad')&&draft){draft.c=b.dataset.c;keepText();render();return}
   if(b.classList.contains('kchip')&&draft){draft.k=+b.dataset.i;keepText();render();return}
-  if(b.id==='nsave'&&draft){keepText();const k=draft.day;S.notes[k]={k:draft.k,c:draft.c,t:[...draft.t].slice(0,20).join('')};freshNote=k;edit=false;draft=null;sel=k===TODAY?null:k;info='便利貼貼好了';render();schedule();return}
+  if(b.id==='nsave'&&draft){keepText();const k=draft.day;S.notes[k]={k:draft.k,c:draft.c,t:[...draft.t].slice(0,40).join('')};freshNote=k;edit=false;draft=null;sel=k===TODAY?null:k;info='便利貼貼好了';render();schedule();return}
   if(b.id==='ncancel'){edit=false;draft=null;if(!noteOf(sel))sel=null;render();return}
   if(b.id==='nedit'){edit=true;draft=null;sel=sel||TODAY;render();return}
   if(b.id==='ndel'){const k=sel||TODAY;delete S.notes[k];draft=null;edit=false;info='便利貼撕掉了';sel=null;render();schedule();return}
@@ -473,7 +473,7 @@ function stopMusic(){if(!MUS)return;const m=MUS;MUS=null;clearInterval(m.timer);
   setTimeout(()=>{try{m.srcs.forEach(x=>x.stop());m.master.disconnect();if(m.el){m.el.pause();m.el.srcObject=null}}catch(_){}},1400)}
 
 function keepText(){const t=document.getElementById('nt');if(t&&draft)draft.t=t.value}
-document.addEventListener('input',e=>{if(e.target.id==='nt'){let v=e.target.value;if([...v].length>20){v=[...v].slice(0,20).join('');e.target.value=v}if(draft)draft.t=v;const c=document.getElementById('cnt');if(c)c.textContent=[...v].length+'/20'}});
+document.addEventListener('input',e=>{if(e.target.id==='nt'){let v=e.target.value;if([...v].length>40){v=[...v].slice(0,40).join('');e.target.value=v}if(draft)draft.t=v;const c=document.getElementById('cnt');if(c)c.textContent=[...v].length+'/40'}});
 document.addEventListener('keydown',e=>{const g=e.target.closest&&e.target.closest('.hit');if(g&&(e.key==='Enter'||e.key===' ')){e.preventDefault();g.click()}});
 render();
 (async()=>{try{if(window.claude&&window.claude.use)artifact=await window.claude.use('artifact')}catch(e){}
