@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>一天一針</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="一天一針">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#f7f6f0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hina+Mincho&family=Iansui&family=Noto+Sans+TC:wght@400;900&family=Noto+Serif+TC:wght@900&family=LXGW+WenKai+TC&display=swap" rel="stylesheet">
+<style id="css">
+/* hallmark: theme riso (by request) re-inked: vermilion yarn, pearl pins, lime trims, on a kraft board; app screen; signature: each check-in pushes a pearl pin and the yarn is pulled over and wrapped around it
+   critique: one job (knit today), one picture (the board), one figure (the streak sticker); no colour-block text shadows, no labels in caps */
+:root{
+  --color-board:#f7f6f0;--color-ink:#2b1a10;--color-pencil:#57524c;--color-muted:#6f6a62;
+  --color-yarn:#c8371f;--color-lime:#d9e64a;--color-lime-lo:#a7b425;--color-paper:#fbf9f2;--color-tape:#efe6c8;
+  --color-focus:#2b1a10;--font-kao:"Iansui","Noto Sans TC","Noto Sans CJK TC",sans-serif;--font-note:"Iansui","Noto Sans TC","Noto Sans CJK TC",sans-serif;--font-display:"Hina Mincho","Noto Serif TC","Noto Serif CJK TC","Songti TC",serif;--radius:10px;color-scheme:light}
+*{box-sizing:border-box;min-width:0}
+html,body{overflow-x:clip}
+body{margin:0;min-height:100vh;background:var(--color-board);color:var(--color-ink);font:16px/1.6 var(--font-display)}
+.bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.wrap{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:22px 14px 40px}
+.head{position:relative;height:118px}
+.tape{position:absolute;display:inline-block;background:var(--color-tape);opacity:.9;padding:6px 22px 4px;box-shadow:0 1px 2px rgba(60,35,10,.28);
+ -webkit-mask:linear-gradient(90deg,transparent 0,#000 3px,#000 calc(100% - 3px),transparent 100%);clip-path:polygon(0 8%,3% 0,8% 10%,12% 1%,100% 0,97% 20%,100% 42%,98% 66%,100% 100%,92% 92%,86% 100%,0 100%,2% 70%,0 44%,3% 24%)}
+.tape::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(100deg,rgba(255,255,255,.12) 0 2px,rgba(140,110,60,.06) 2px 5px);pointer-events:none}
+h1{margin:0;font:400 clamp(34px,10vw,44px)/1.15 var(--font-display);letter-spacing:.08em;color:var(--color-ink);overflow-wrap:break-word}
+.ttl{position:absolute;left:2px;top:4px;margin:0;display:flex;align-items:center;gap:4px;font-size:inherit}
+.pc{display:inline-block;color:#1e1a16;line-height:1;padding:7px 8px 5px;background:#efe9d8;background-image:repeating-linear-gradient(0deg,transparent 0 5px,rgba(60,50,40,.13) 5px 6px),linear-gradient(100deg,rgba(120,90,40,.08),transparent 60%);
+ box-shadow:1px 2px 3px rgba(60,40,20,.3);clip-path:polygon(2% 4%,30% 0,62% 5%,98% 1%,100% 40%,96% 72%,100% 98%,64% 95%,34% 100%,0 97%,3% 60%,0 30%)}
+.p0{font:900 40px/1 "Noto Serif TC","Noto Serif CJK TC",serif;transform:rotate(-6deg) translateY(2px)}
+.p1{font:400 36px/1 var(--font-display);transform:rotate(4deg) translateY(-4px)}
+.p2{font:900 40px/1 "Noto Sans TC","Noto Sans CJK TC",sans-serif;transform:rotate(-3deg) translateY(3px)}
+.p3{font:400 38px/1 "LXGW WenKai TC","Noto Serif TC",serif;transform:rotate(7deg) translateY(-2px)}
+.t2{left:30px;top:80px;transform:rotate(2deg);background:color-mix(in srgb,var(--color-lime) 78%,#fff);padding:3px 16px 2px;font-size:16px}
+.sticker{position:absolute;right:6px;top:4px;width:104px;height:104px;border-radius:50%;background:#fff;transform:rotate(9deg);
+ box-shadow:1px 3px 5px rgba(60,45,30,.25),0 0 0 .5px rgba(0,0,0,.08);display:grid;place-items:center}
+.sticker .in{width:88px;height:88px;border-radius:50%;background:radial-gradient(circle at 34% 28%,#eef59a,var(--color-lime) 45%,#c5d23a);display:grid;place-items:center;text-align:center;line-height:1.05}
+.sticker b{display:block;font:400 34px/1 var(--font-display);font-variant-numeric:tabular-nums}
+.sticker span{display:block;font-size:13px}
+.sticker::after{content:"";position:absolute;right:10px;bottom:12px;width:22px;height:14px;border-radius:0 0 50% 0;background:linear-gradient(135deg,transparent 45%,rgba(255,255,255,.9) 50%,#e9e4d6);transform:rotate(-20deg);box-shadow:-1px -1px 2px rgba(0,0,0,.15)}
+.mnav{display:flex;align-items:center;justify-content:space-between;margin:6px 0 0}
+.tag{width:48px;height:44px;border:0;background:#fff;color:var(--color-ink);font:400 22px/1 var(--font-display);cursor:pointer;
+ clip-path:polygon(0 0,100% 0,100% 100%,0 100%);box-shadow:0 0 0 1px rgba(60,50,40,.12),1px 2px 3px rgba(60,45,30,.18);border-radius:3px;transition:transform .08s ease-out}
+.tag:active{transform:translate(1px,1px)}
+.tag:disabled{opacity:.35;cursor:default}
+.mlabel{font-size:15px;color:var(--color-muted);flex:1;text-align:center}
+.mus{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 12px;margin-right:8px;border:0;border-radius:999px;background:#fff;color:var(--color-pencil);font:400 14px var(--font-display);cursor:pointer;box-shadow:0 0 0 1px rgba(60,50,40,.12),1px 2px 3px rgba(60,45,30,.14)}
+.mus[aria-pressed="true"]{background:color-mix(in srgb,var(--color-lime) 60%,#fff);color:var(--color-ink)}
+.mus[aria-pressed="true"] svg{animation:bob 1.7s ease-in-out infinite}
+.tracks{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.trk{min-height:36px;padding:0 12px;border:0;border-radius:3px;background:#fff;color:var(--color-pencil);font:400 14px var(--font-display);cursor:pointer;box-shadow:0 0 0 1px rgba(60,50,40,.12),1px 2px 3px rgba(60,45,30,.12);transition:transform .1s ease-out}
+.trk.on{background:color-mix(in srgb,var(--color-lime) 60%,#fff);color:var(--color-ink);transform:translateY(-2px) rotate(-2deg)}
+.trk:focus-visible{outline:2px solid var(--color-focus);outline-offset:3px}
+@keyframes bob{50%{transform:translateY(-2px) rotate(-6deg)}}
+.mus:focus-visible{outline:2px solid var(--color-focus);outline-offset:3px}
+svg.board{touch-action:pan-y;-webkit-user-select:none;user-select:none}
+svg.board{display:block;width:100%;height:auto;overflow:visible;margin-top:4px}
+.hit{cursor:pointer}
+.hit:focus-visible{outline:none}
+.hit:focus-visible .fr{stroke:var(--color-focus);stroke-width:1.5;stroke-dasharray:3 3}
+.fr{fill:none;stroke:transparent}
+.newpin{animation:press .55s cubic-bezier(.3,1.4,.5,1) both;transform-box:fill-box;transform-origin:center}
+@keyframes press{0%{transform:translate(-10px,-16px) scale(1.5);opacity:0}60%{opacity:1}100%{transform:none;opacity:1}}
+.newsh{animation:shin .55s ease-out both}
+@keyframes shin{from{opacity:0}to{opacity:1}}
+.drawmask{stroke-dasharray:1 1;stroke-dashoffset:1;animation:draw 1.3s .5s cubic-bezier(.45,.05,.3,1) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.late{animation:shin .5s 1.7s ease-out both}
+.info{min-height:30px;font-size:15px;color:var(--color-pencil);text-align:center;margin-top:2px}
+.info button{margin-left:8px;min-height:36px;padding:0 12px;border:1px solid var(--color-pencil);border-radius:6px;background:transparent;color:var(--color-ink);font:inherit;cursor:pointer}
+.act{display:grid;justify-items:center;gap:8px;margin-top:10px}
+.go{position:relative;width:min(100%,340px);min-height:66px;border:0;border-radius:14px;background:#fff;padding:7px;cursor:pointer;
+ box-shadow:0 0 0 .5px rgba(0,0,0,.08),1px 4px 7px rgba(60,45,30,.25);transform:rotate(-1.2deg);transition:transform .1s ease-out,box-shadow .1s ease-out}
+.go span{display:block;border-radius:9px;padding:14px 10px;background:linear-gradient(170deg,#eef59a,var(--color-lime) 40%,#c9d63c);font:400 22px/1.2 var(--font-display);letter-spacing:.12em;color:var(--color-ink)}
+.go:hover{transform:rotate(-1.2deg) translateY(-1px);box-shadow:1px 6px 9px rgba(50,28,8,.36)}
+.go:active{transform:rotate(-1.2deg) translate(1px,2px);box-shadow:0 1px 2px rgba(50,28,8,.4)}
+.done{font-size:22px;letter-spacing:.12em;color:var(--color-ink);padding:10px 0 0}
+.done svg{vertical-align:-4px;margin-left:6px}
+.undo{min-height:44px;padding:0 12px;border:0;background:transparent;color:var(--color-pencil);font:400 15px var(--font-display);text-decoration:underline;text-decoration-color:rgba(87,82,76,.6);text-underline-offset:5px;cursor:pointer}
+.go:focus-visible,.tag:focus-visible,.undo:focus-visible,.info button:focus-visible{outline:2px solid var(--color-focus);outline-offset:3px}
+.panel{margin:18px auto 6px;display:grid;justify-items:center;gap:14px}
+.ph{margin:0;font:400 18px/1.4 var(--font-display);color:var(--color-ink)}
+.notewrap{position:relative;z-index:0;transform:rotate(-2deg);margin:6px 0 4px}
+.notewrap::after{content:"";position:absolute;z-index:-1;right:10px;bottom:9px;width:62%;height:22px;box-shadow:6px 14px 12px rgba(60,42,22,.32);transform:rotate(4deg)}
+.notewrap::before{content:"";position:absolute;z-index:-1;left:12px;bottom:9px;width:40%;height:18px;box-shadow:-2px 12px 10px rgba(60,42,22,.18);transform:rotate(-3deg)}
+.note{position:relative;width:min(72vw,236px);aspect-ratio:1;padding:24px 18px 14px;display:flex;flex-direction:column;color:var(--color-ink);
+ background:linear-gradient(176deg,var(--nd) 0,var(--nb) 15%,var(--nb) 66%,var(--nl) 100%);box-shadow:0 1px 1.5px rgba(60,40,20,.2),inset 0 -14px 18px -14px rgba(255,255,255,.6);
+ border-radius:0 0 3px 18px/0 0 3px 4px}
+.note::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.32;mix-blend-mode:multiply;background-size:160px 160px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .5 0 0 0 0 .42 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E")}
+.note::after{content:"";position:absolute;left:0;right:0;top:0;height:15%;background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0));pointer-events:none}
+.npin{position:absolute;left:50%;top:-6px;transform:translateX(-50%);overflow:visible}
+.kao{font:400 26px/1.2 var(--font-kao);text-align:center;margin:6px 0 8px;white-space:nowrap}
+.note textarea,.note .nt{flex:1;width:100%;margin:0;border:0;background:transparent;resize:none;color:var(--color-ink);font:400 19px/1.65 var(--font-note);padding:0;overflow-wrap:anywhere;
+ background-image:linear-gradient(transparent calc(1.65em - 1px),rgba(70,60,50,.14) calc(1.65em - 1px),rgba(70,60,50,.14) 1.65em,transparent 1.65em);background-size:100% 1.65em}
+.note textarea:focus{outline:none}
+.note textarea::placeholder{color:rgba(60,50,40,.45)}
+.cnt{position:absolute;right:14px;top:10px;font-size:13px;color:var(--color-pencil)}
+.nd{font:400 14px var(--font-note);color:var(--color-pencil);text-align:right}
+.pick{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.pad{width:44px;height:44px;border:0;cursor:pointer;background:linear-gradient(176deg,var(--nd) 0,var(--nb) 18%,var(--nb) 70%,var(--nl) 100%);box-shadow:1px 2px 3px rgba(60,42,22,.28),0 4px 0 -2px var(--nb),0 5px 2px -2px rgba(60,42,22,.2);transition:transform .12s ease-out}
+.pad.on{transform:translateY(-5px) rotate(-4deg);box-shadow:2px 7px 8px rgba(60,42,22,.3),0 4px 0 -2px var(--nb)}
+.kgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;width:100%;max-width:400px}
+.kchip{min-height:58px;border:0;border-radius:4px;background:#fff;color:var(--color-ink);cursor:pointer;padding:6px 2px;display:grid;gap:2px;justify-items:center;box-shadow:0 0 0 1px rgba(60,50,40,.1),1px 2px 3px rgba(60,45,30,.12);transition:transform .1s ease-out}
+.kchip .kf{font:400 17px/1.2 var(--font-kao);white-space:nowrap}
+.kchip .kl{font:400 13px/1.2 var(--font-display);color:var(--color-pencil)}
+.kchip.on{background:color-mix(in srgb,var(--color-lime) 55%,#fff);box-shadow:0 0 0 1.5px var(--color-lime-lo),1px 2px 3px rgba(60,45,30,.12)}
+.kchip:active{transform:translate(1px,1px)}
+.pact{display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap}
+.stick{min-height:48px;padding:0 26px;border:0;border-radius:10px;background:var(--color-lime);color:var(--color-ink);font:400 18px/1 var(--font-display);letter-spacing:.1em;cursor:pointer;box-shadow:0 0 0 4px #fff,1px 4px 7px rgba(60,45,30,.28);transition:transform .08s ease-out}
+.stick:active{transform:translate(1px,2px)}
+.lnk{min-height:44px;padding:0 10px;border:0;background:transparent;color:var(--color-pencil);font:400 15px var(--font-display);text-decoration:underline;text-decoration-color:rgba(87,82,76,.5);text-underline-offset:5px;cursor:pointer}
+.pad:focus-visible,.kchip:focus-visible,.stick:focus-visible,.lnk:focus-visible{outline:2px solid var(--color-focus);outline-offset:3px}
+.newnote{animation:stickin .5s .15s cubic-bezier(.3,1.3,.5,1) both;transform-box:fill-box;transform-origin:center}
+@keyframes stickin{from{transform:translateY(-14px) scale(1.25);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.mus svg{animation:none!important}.newnote{animation:none}.pad,.kchip,.stick{transition:none}}
+.save{min-height:20px;font-size:13px;color:var(--color-muted);text-align:center}
+@media (prefers-reduced-motion:reduce){.newpin,.newsh,.late{animation:none}.drawmask{animation:none;stroke-dashoffset:0}.go,.tag{transition:none}}
+</style>
+</head>
+<body>
+<svg class="bg" aria-hidden="true" preserveAspectRatio="none"><defs>
+<filter id="kraft" x="0" y="0" width="100%" height="100%">
+ <feTurbulence type="fractalNoise" baseFrequency="0.006 0.012" numOctaves="2" seed="4" result="blot"/>
+ <feColorMatrix in="blot" type="matrix" values="0 0 0 0 0.9 0 0 0 0 0.88 0 0 0 0 0.8 0 0 0 -.9 .62" result="b2"/>
+ <feTurbulence type="fractalNoise" baseFrequency="1.2 0.5" numOctaves="2" seed="9" result="fib"/>
+ <feColorMatrix in="fib" type="matrix" values="0 0 0 0 .55 0 0 0 0 .5 0 0 0 0 .42 0 0 0 .55 -.27" result="f2"/>
+ <feFlood flood-color="#f7f6f0" result="base"/>
+ <feMerge result="m"><feMergeNode in="base"/><feMergeNode in="b2"/><feMergeNode in="f2"/></feMerge>
+ <feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="2" result="n"/>
+ <feDiffuseLighting in="n" surfaceScale=".22" lighting-color="#fff" result="lit"><feDistantLight azimuth="235" elevation="72"/></feDiffuseLighting>
+ <feComposite in="m" in2="lit" operator="arithmetic" k1="1.02" k2="0" k3="0" k4="0"/>
+</filter></defs><rect width="100%" height="100%" filter="url(#kraft)"/></svg>
+<main class="wrap" id="app"><h1>一天一針</h1></main>
+<script type="application/json" id="state">{"days":[]}</script>
+<script id="appjs">
+{
+const SRC_CSS=document.getElementById('css').textContent;
+const SRC_JS=document.getElementById('appjs').textContent;
+const BG=document.querySelector('svg.bg').outerHTML;
+let S;try{S=JSON.parse(document.getElementById('state').textContent)}catch(e){S={days:[]}}
+if(!Array.isArray(S.days))S.days=[];
+const pad=n=>String(n).padStart(2,'0');
+const ymd=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const NOW=new Date(),TODAY=ymd(NOW),THIS_YM=TODAY.slice(0,7);
+let ym=THIS_YM,fresh=null,info='',ask=null;
+const has=k=>S.days.includes(k);
+if(!S.notes||typeof S.notes!=='object')S.notes={};
+const NC={yellow:{n:'檸檬黃',b:'#f6e07c',l:'#fbefb2',d:'#e8cd5c'},pink:{n:'櫻花粉',b:'#f5b8c6',l:'#fad5dd',d:'#e99db0'},lime:{n:'萊姆綠',b:'#e0ea86',l:'#eef4bc',d:'#cdd86a'},blue:{n:'天空藍',b:'#b2d8ee',l:'#d3e9f6',d:'#94c4e0'},orange:{n:'杏桃橘',b:'#f8c494',l:'#fcdcbd',d:'#eda874'}};
+const KAO=[['O(∩_∩)O','開心'],['(^_~)','得意'],['d(￣ ￣)','很讚'],['( ˘ω˘ )','調皮'],['(´ー`)','放鬆'],['(｡-ω-)zzz','想睡'],['(°ロ°)','傻眼'],['(￣_￣)','無言'],['(>_<)','緊張'],['(._.)','低落'],['(｀へ´)','生氣'],['(´;ω;`)','想哭']];
+let sel=null,edit=false,draft=null,freshNote=null,BOARD=null;
+const noteOf=k=>S.notes[k]||null;
+const rnd=(k,s)=>{let h=2166136261^s;for(const c of k)h=Math.imul(h^c.charCodeAt(0),16777619);return((h>>>0)%1000)/1000};
+function streak(){let d=new Date();if(!has(ymd(d)))d.setDate(d.getDate()-1);let n=0;while(has(ymd(d))){n++;d.setDate(d.getDate()-1)}return n}
+
+const DEFS=`<defs>
+<radialGradient id="pearl" cx=".36" cy=".3" r=".78"><stop offset="0" stop-color="#ffffff"/><stop offset=".3" stop-color="#f6f2ea"/><stop offset=".72" stop-color="#d6ccb9"/><stop offset="1" stop-color="#93876f"/></radialGradient>
+<radialGradient id="glassFl" cx=".4" cy=".36" r=".75"><stop offset="0" stop-color="#ffffff" stop-opacity=".1"/><stop offset=".75" stop-color="#e4ebee" stop-opacity=".2"/><stop offset="1" stop-color="#8e9ca5" stop-opacity=".42"/></radialGradient>
+<linearGradient id="glassH" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8d9aa3" stop-opacity=".45"/><stop offset=".22" stop-color="#ffffff" stop-opacity=".35"/><stop offset=".6" stop-color="#e6edf0" stop-opacity=".12"/><stop offset="1" stop-color="#7f8d96" stop-opacity=".5"/></linearGradient>
+<linearGradient id="glassV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".25"/><stop offset="1" stop-color="#9aa7af" stop-opacity=".4"/></linearGradient>
+<radialGradient id="glassTop" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#ffffff" stop-opacity=".55"/><stop offset=".7" stop-color="#e9f0f3" stop-opacity=".2"/><stop offset="1" stop-color="#9aa8b1" stop-opacity=".45"/></radialGradient>
+<radialGradient id="clear" cx=".42" cy=".38" r=".7"><stop offset="0" stop-color="#ffffff" stop-opacity=".08"/><stop offset=".7" stop-color="#dfe6ea" stop-opacity=".22"/><stop offset="1" stop-color="#8b99a3" stop-opacity=".45"/></radialGradient>
+<filter id="soft1" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1"/></filter>
+<radialGradient id="bounce" cx=".7" cy=".78" r=".35"><stop offset="0" stop-color="#ffe9dc" stop-opacity=".55"/><stop offset="1" stop-color="#ffe9dc" stop-opacity="0"/></radialGradient>
+<linearGradient id="steel" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6d7178"/><stop offset=".45" stop-color="#e9ecef"/><stop offset="1" stop-color="#7d8188"/></linearGradient>
+<radialGradient id="ballSh" cx=".36" cy=".3" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset=".8" stop-color="#3a0c05" stop-opacity=".25"/><stop offset="1" stop-color="#3a0c05" stop-opacity=".55"/></radialGradient>
+<filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.2"/></filter>
+<filter id="soft4" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
+<filter id="fuzz" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="1.3" numOctaves="2" seed="3" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="3.2"/></filter>
+<filter id="fuzz2" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="2.2" numOctaves="1" seed="11" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="4"/></filter>
+<filter id="wob" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="1" seed="6" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="2.2"/></filter>
+<filter id="pencil" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="1.8" numOctaves="1" seed="5" result="p"/><feDisplacementMap in="SourceGraphic" in2="p" scale="1.5" result="d"/><feComposite in="d" in2="p" operator="arithmetic" k1="0" k2=".9" k3="-.25" k4="0"/></filter>
+${Object.entries(NC).map(([k,c])=>`<linearGradient id="ng-${k}" x1="0" y1="0" x2=".15" y2="1"><stop offset="0" stop-color="${c.d}"/><stop offset=".16" stop-color="${c.b}"/><stop offset=".72" stop-color="${c.b}"/><stop offset="1" stop-color="${c.l}"/></linearGradient>`).join('')}
+<clipPath id="ballc"><circle r="31"/></clipPath>
+</defs>`;
+
+const f1=n=>Math.round(n*10)/10;
+function segs(d){const tk=d.match(/[MCQc]|-?\d*\.?\d+(?:e-?\d+)?/g)||[];let i=0,cx=0,cy=0,cmd='',out=[];const n=()=>+tk[i++];
+  while(i<tk.length){if(/[MCQc]/.test(tk[i]))cmd=tk[i++];
+    if(cmd==='M'){cx=n();cy=n()}
+    else if(cmd==='C'){const p=[cx,cy,n(),n(),n(),n(),n(),n()];out.push(p);cx=p[6];cy=p[7]}
+    else if(cmd==='c'){const a=[n(),n(),n(),n(),n(),n()],p=[cx,cy,cx+a[0],cy+a[1],cx+a[2],cy+a[3],cx+a[4],cy+a[5]];out.push(p);cx=p[6];cy=p[7]}
+    else if(cmd==='Q'){const q=[n(),n(),n(),n()],p=[cx,cy,cx+2/3*(q[0]-cx),cy+2/3*(q[1]-cy),q[2]+2/3*(q[0]-q[2]),q[3]+2/3*(q[1]-q[3]),q[2],q[3]];out.push(p);cx=q[2];cy=q[3]}
+    else i++}
+  return out}
+function samples(d,st){const pts=[];for(const p of segs(d)){const L=Math.hypot(p[2]-p[0],p[3]-p[1])+Math.hypot(p[4]-p[2],p[5]-p[3])+Math.hypot(p[6]-p[4],p[7]-p[5]),k=Math.max(1,Math.ceil(L*.85/st));
+  for(let j=0;j<k;j++){const t=j/k,u=1-t,x=u*u*u*p[0]+3*u*u*t*p[2]+3*u*t*t*p[4]+t*t*t*p[6],y=u*u*u*p[1]+3*u*u*t*p[3]+3*u*t*t*p[5]+t*t*t*p[7],
+    dx=3*u*u*(p[2]-p[0])+6*u*t*(p[4]-p[2])+3*t*t*(p[6]-p[4]),dy=3*u*u*(p[3]-p[1])+6*u*t*(p[5]-p[3])+3*t*t*(p[7]-p[5]);pts.push([x,y,Math.atan2(dy,dx)||0])}}
+  return pts}
+function twist(d,w,seed){
+  let g='',c='',h='',i=0;const st=1.55,hw=w/2;
+  for(const [px,py,a] of samples(d,st)){i++;
+    const ux=Math.cos(a),uy=Math.sin(a),nx=-uy,ny=ux;
+    g+=`M${f1(px+nx*hw-ux*.9)},${f1(py+ny*hw-uy*.9)}L${f1(px-nx*hw+ux*.9)},${f1(py-ny*hw+uy*.9)}`;
+    const cx=px+ux*st/2,cy=py+uy*st/2;
+    c+=`M${f1(cx+nx*hw*.7-ux*.6)},${f1(cy+ny*hw*.7-uy*.6)}L${f1(cx-nx*hw*.7+ux*.6)},${f1(cy-ny*hw*.7+uy*.6)}`;
+    const r=Math.sin(i*12.9898+seed*78.233)*43758.5453,fr=r-Math.floor(r);
+    if(fr<.16){const sd=fr<.08?1:-1,len=1+fr*10,bx=px+nx*sd*hw*.8,by=py+ny*sd*hw*.8,ex=bx+nx*sd*len+ux*(fr*14-2.4),ey=by+ny*sd*len+uy*(fr*14-2.4);
+      h+=`M${f1(bx)},${f1(by)}Q${f1(bx+nx*sd*len*.6)},${f1(by+ny*sd*len*.6)} ${f1(ex)},${f1(ey)}`}}
+  return {g,c,h}}
+function yarnLayers(list){
+  let sh='',ha='',bo='',ha2='';
+  for(const st of list){const T=twist(st.d,2.8,st.seed),m=st.fresh?' mask="url(#mnew)"':'',c=st.late?' class="late"':'',id=` data-s="${st.id}"`;
+    sh+=`<path${id} data-l="sh" d="${st.d}" fill="none" stroke="#5a3626" stroke-width="2.6" opacity=".2" transform="translate(3,5)"${m}${c}/>`;
+    ha+=`<path${id} data-l="ha" d="${st.d}" fill="none" stroke="#e0705a" stroke-width="4.6" stroke-linecap="round" opacity=".14"${m}${c}/>`;
+    bo+=`<g${id}${m}${c}><path data-l="bo" d="${st.d}" fill="none" stroke="#b9361f" stroke-width="2.8" stroke-linecap="round"/><path data-l="cr" d="${T.c}" fill="none" stroke="#d9563c" stroke-width="1.1" stroke-linecap="round" opacity=".6"/><path data-l="gr" d="${T.g}" fill="none" stroke="#7e1d0e" stroke-width=".45" opacity=".38"/></g>`;
+    ha2+=`<path${id} data-l="hr" d="${T.h}" fill="none" stroke="#d65a40" stroke-width=".3" opacity=".45"${m}${c}/>`}
+  return `<g class="yl" filter="url(#soft)">${sh}</g><g class="yl" filter="url(#fuzz)">${ha}</g><g class="yl" filter="url(#wob)">${bo}</g><g>${ha2}</g>`}
+function yarn(d,extra='',seed=1){const T=twist(d,2.8,seed);return `<g ${extra}>
+<path d="${d}" fill="none" stroke="#5a3626" stroke-width="2.6" opacity=".2" transform="translate(3,5)" filter="url(#soft)"/>
+<g filter="url(#wob)"><path d="${d}" fill="none" stroke="#b9361f" stroke-width="2.8" stroke-linecap="round"/>
+<path d="${T.c}" fill="none" stroke="#d9563c" stroke-width="1.1" stroke-linecap="round" opacity=".6"/>
+<path d="${T.g}" fill="none" stroke="#7e1d0e" stroke-width=".45" opacity=".38"/></g>
+<path d="${T.h}" fill="none" stroke="#d65a40" stroke-width=".3" opacity=".45"/></g>`}
+
+function pin(x,y,cls){return `<g class="${cls||''}">
+<circle cx="${x+4.2}" cy="${y+5.6}" r="9.6" fill="#4a3a2c" opacity=".2" filter="url(#soft)"/>
+<circle cx="${x+3.4}" cy="${y+4.4}" r="4.2" fill="#fffdf2" opacity=".8" filter="url(#soft1)"/>
+<circle cx="${x+.5}" cy="${y+.8}" r="9.4" fill="url(#glassFl)" stroke="#73818a" stroke-width=".6" stroke-opacity=".55"/>
+<circle cx="${x+.5}" cy="${y+.8}" r="8.4" fill="none" stroke="#fff" stroke-width=".6" opacity=".55"/>
+<circle cx="${x+.4}" cy="${y+.6}" r="1.4" fill="#868d94"/><circle cx="${x+.1}" cy="${y+.2}" r=".5" fill="#e9ecef"/>
+<circle cx="${x}" cy="${y}" r="6.3" fill="url(#glassTop)" stroke="#6c7a83" stroke-width=".7" stroke-opacity=".6"/>
+<circle cx="${x}" cy="${y}" r="5.1" fill="none" stroke="#8b98a0" stroke-width=".5" opacity=".35"/>
+<path d="M${x-4.6},${y-1.4} A5,5 0 0,1 ${x-1},${y-4.9}" fill="none" stroke="#fff" stroke-width="1.3" stroke-linecap="round" opacity=".95"/>
+<circle cx="${x+2.6}" cy="${y-2.9}" r=".7" fill="#fff" opacity=".8"/>
+<path d="M${x+5.2},${y+4.4} A8.2,8.2 0 0,0 ${x+8.6},${y-.6}" fill="none" stroke="#fff" stroke-width=".8" stroke-linecap="round" opacity=".6"/></g>`}
+
+function ball(cx,cy){let s='';for(let i=0;i<30;i++){const a=(i*47)%180,rx=30-(i%5)*2.2,ry=6+(i*13)%17,o=((i*7)%9-4),oy=(i*5)%9-4;
+  const K=.5523,kx=rx*K,ky=ry*K,d=`M${o+rx},${oy} C${o+rx},${oy+ky} ${o+kx},${oy+ry} ${o},${oy+ry} C${o-kx},${oy+ry} ${o-rx},${oy+ky} ${o-rx},${oy} C${o-rx},${oy-ky} ${o-kx},${oy-ry} ${o},${oy-ry} C${o+kx},${oy-ry} ${o+rx},${oy-ky} ${o+rx},${oy}`,T=twist(d,2.8,i+9);
+  s+=`<g transform="rotate(${a})"><path d="${d}" fill="none" stroke="${i%3?'#bd3820':'#a82814'}" stroke-width="2.9"/><path d="${T.c}" fill="none" stroke="#dd5a40" stroke-width="1.1" opacity=".7"/><path d="${T.g}" fill="none" stroke="#7e1d0e" stroke-width=".45" opacity=".55"/></g>`}
+ return `<g transform="translate(${cx},${cy})"><ellipse cx="10" cy="26" rx="34" ry="12" fill="#4a3a2c" opacity=".25" filter="url(#soft4)"/>
+<circle r="31" fill="#a82814"/><g clip-path="url(#ballc)" filter="url(#wob)">${s}</g><circle r="31" fill="url(#ballSh)"/>
+<circle r="30.5" fill="none" stroke="#d65a40" stroke-width="2" opacity=".18" filter="url(#fuzz)"/></g>`}
+
+function mini(p,n,isFresh){const c=n.c in NC?n.c:'yellow',r=(rnd(p.k,3)-.5)*22,x=p.x-8,y=p.y-6;
+  return `<g class="${isFresh?'newnote':''}"><g transform="rotate(${r.toFixed(1)} ${p.x} ${p.y})">
+<path d="M${x+3},${y+4} L${x+37},${y+3} L${x+39},${y+38} L${x+4},${y+39} Z" fill="#3a2a1a" opacity=".2" filter="url(#soft1)"/>
+<path d="M${x},${y} L${x+34},${y} L${x+34},${y+33} Q${x+25},${y+35.5} ${x},${y+34} Z" fill="url(#ng-${c})"/>
+<path d="M${x},${y+34} Q${x+25},${y+35.5} ${x+34},${y+33}" fill="none" stroke="#fff" stroke-width=".6" opacity=".45"/>
+<g filter="url(#pencil)" stroke="#57524c" stroke-width=".7" opacity=".4" fill="none"><path d="M${x+6},${y+18} q4,-1.5 9,0 t10,0"/><path d="M${x+6},${y+25} q3,-1.2 7,0 t8,0"/></g></g></g>`}
+
+function board(){
+  const [Y,M]=ym.split('-').map(Number);
+  const first=new Date(Y,M-1,1),days=new Date(Y,M,0).getDate(),lead=(first.getDay()+6)%7;
+  const rows=Math.ceil(days/7),W=360,RY=r=>58+r*78,H=RY(rows-1)+120;
+  const pos=d=>{const k=`${ym}-${pad(d)}`,i=d-1,r=Math.floor(i/7),c=i%7,cc=r%2?6-c:c;
+    return{k,d,r,x:40+cc*46.7+(rnd(k,1)-.5)*9,y:RY(r)+(rnd(k,2)-.5)*12}};
+  const lastDay=ym<THIS_YM?days:(ym===THIS_YM?NOW.getDate():0);
+  const all=[];for(let d=1;d<=days;d++)all.push(pos(d));
+  const on=all.filter(p=>p.d<=lastDay&&has(p.k));
+  const W8=p=>({x:p.x-.4,y:p.y+1.4});
+  const wrapAt=p=>{const w=W8(p);return `M${w.x},${w.y} c1.4,1 2.8,-.2 2.3,-1.7 c-.7,-1.3 -2.8,-.9 -2.5,.6`};
+  const strands=[];let sid=0;
+  const addS=(d,o)=>strands.push(Object.assign({id:sid++,d,seed:sid*7+1},o));
+  const spanD=(a,b)=>{const A=W8(a),B=W8(b),dist=Math.hypot(B.x-A.x,B.y-A.y),S=12+dist*.34,lo=Math.max(A.y,B.y);
+    if(a.r===b.r||Math.abs(B.x-A.x)>60){const dx=B.x-A.x;
+      return [`M${A.x},${A.y} C${A.x+dx*.12},${lo+S*1.25} ${A.x+dx*.55},${lo+S*1.1} ${B.x},${B.y}`,
+        `M${B.x},${B.y} C${B.x-dx*.3},${lo+S*.32} ${A.x+dx*.3},${lo+S*.4} ${A.x},${A.y}`,
+        `M${A.x},${A.y} C${A.x+dx*.45},${lo+S*1.05} ${A.x+dx*.9},${lo+S*1.3} ${B.x},${B.y}`]}
+    const out=A.x>W/2?1:-1;return [`M${A.x},${A.y} C${A.x+out*26},${A.y+34} ${B.x+out*30},${B.y+26} ${B.x},${B.y}`]};
+  let ballSvg='',pins='',marks='',notes='',wraps='',maskD='';
+  const bx=W-48,by=H-44;
+  if(on.length){
+    const f=W8(on[0]);addS(`M${f.x-34},${f.y-46} C${f.x-40},${f.y-6} ${f.x-14},${f.y+16} ${f.x},${f.y}`,{free:'start',fresh:on[0].k===fresh});
+    for(let i=1;i<on.length;i++){const fr=on[i].k===fresh;for(const d of spanD(on[i-1],on[i]))addS(d,{fresh:fr})}
+    for(const p of on)wraps+=wrapAt(p)+' ';
+    const L=W8(on[on.length-1]);
+    addS(`M${L.x},${L.y} C${L.x+8},${L.y+46} ${L.x+(bx-L.x)*.4},${Math.max(L.y,by)+40} ${bx-26},${by+14}`,{late:!!fresh});
+    maskD=strands.filter(t=>t.fresh).map(t=>t.d).join(' ');
+  }
+  BOARD={strands,W,H};
+  for(const p of all){
+    if(p.d>lastDay)continue;
+    const isOn=has(p.k),isT=p.k===TODAY;
+    if(isOn){const nn=noteOf(p.k);if(nn)notes+=mini(p,nn,p.k===freshNote);pins+=`<g class="hit" tabindex="0" role="button" data-k="${p.k}" aria-label="${M}月${p.d}日，已織${noteOf(p.k)?'，有便利貼':''}"><rect class="fr" x="${p.x-14}" y="${p.y-14}" width="28" height="28" rx="6"/><rect x="${p.x-20}" y="${p.y-20}" width="44" height="44" fill="transparent"/>${pin(p.x,p.y,p.k===fresh?'newpin':'')}</g>`}
+    else{marks+=`<g class="hit" tabindex="0" role="button" data-k="${p.k}" aria-label="${M}月${p.d}日，${isT?'今天還沒織':'沒有織，點一下補上'}"><rect class="fr" x="${p.x-14}" y="${p.y-14}" width="28" height="28" rx="6"/><rect x="${p.x-20}" y="${p.y-20}" width="40" height="40" fill="transparent"/>
+      <g filter="url(#pencil)" fill="none" stroke="#57524c" stroke-width="${isT?1.3:1}" opacity="${isT?.85:.5}">${isT?`<circle cx="${p.x}" cy="${p.y}" r="9"/><path d="M${p.x-3},${p.y-3} l6,6 M${p.x+3},${p.y-3} l-6,6"/>`:`<path d="M${p.x-3},${p.y} l6,0 M${p.x},${p.y-3} l0,6"/>`}</g></g>`}}
+  if(ym===THIS_YM&&!has(TODAY)){const t=all[NOW.getDate()-1];marks+=`<text x="${t.x}" y="${t.y-16}" text-anchor="middle" font-size="12" fill="#57524c" opacity=".85" font-family="Hina Mincho,serif">今天</text>`}
+  if(on.length)ballSvg=ball(bx,by);
+  const mask=maskD?`<mask id="mnew" maskUnits="userSpaceOnUse" x="-20" y="-20" width="${W+40}" height="${H+40}"><path class="drawmask" d="${maskD}" pathLength="1" fill="none" stroke="#fff" stroke-width="26" stroke-linecap="round"/></mask>`:'';
+  const empty=!on.length&&lastDay?`<text x="${W/2}" y="${RY(0)+44}" text-anchor="middle" font-size="15" fill="#57524c" opacity=".8" font-family="Hina Mincho,serif">按下面的按鈕，釘上第一根針</text>`:'';
+  return `<svg class="board" viewBox="0 0 ${W} ${H}" role="img" aria-label="${M}月的毛線">${DEFS}${mask}
+${marks}${empty}${notes}${strands.length?yarnLayers(strands):''}${wraps?`<path d="${wraps}" fill="none" stroke="#b9361f" stroke-width="2.4" opacity=".75"/>`:''}${ballSvg}${pins}</svg>`;
+}
+
+function noteCard(k,n,editing){
+  const c=NC[n.c]||NC.yellow,[,m,d]=k.split('-').map(Number),kao=KAO[n.k]||KAO[0];
+  return `<div class="notewrap" style="--nb:${c.b};--nl:${c.l};--nd:${c.d}"><div class="note">
+   <svg class="npin" width="26" height="26" viewBox="-13 -13 26 26" aria-hidden="true">${pin(0,0,'')}</svg>
+   <div class="kao">${esc(kao[0])}</div>
+   ${editing?`<textarea id="nt" maxlength="20" rows="2" placeholder="今天想記下什麼？" aria-label="心情小記，最多二十字">${esc(n.t||'')}</textarea><div class="cnt" id="cnt">${[...(n.t||'')].length}/20</div>`:`<p class="nt">${esc(n.t||'')}</p>`}
+   <div class="nd">${m}月${d}日・${kao[1]}</div></div></div>`}
+function panel(){
+  const k=sel||(has(TODAY)&&!noteOf(TODAY)&&ym===THIS_YM?TODAY:null);if(!k||!has(k))return '';
+  const n=noteOf(k),[,m,d]=k.split('-').map(Number),label=k===TODAY?'今天':`${m}月${d}日`;
+  if(n&&!edit)return `<section class="panel" aria-label="${label}的便利貼">${noteCard(k,n,false)}
+   <div class="pact"><button class="lnk" id="nedit" type="button">改寫</button><button class="lnk" id="ndel" type="button">撕掉便利貼</button>${k!==TODAY?`<button class="lnk" id="unpin" type="button">拆掉這一針</button>`:''}${sel?`<button class="lnk" id="close" type="button">收起來</button>`:''}</div></section>`;
+  if(!draft||draft.day!==k)draft={day:k,k:n?n.k:0,c:n?n.c:'yellow',t:n?n.t:''};
+  return `<section class="panel" aria-label="寫一張${label}的便利貼"><h2 class="ph">${label}，貼一張心情便利貼</h2>
+   ${noteCard(k,draft,true)}
+   <div class="pick" role="radiogroup" aria-label="便利貼顏色">${Object.entries(NC).map(([id,c])=>`<button type="button" class="pad${draft.c===id?' on':''}" data-c="${id}" role="radio" aria-checked="${draft.c===id}" aria-label="${c.n}" style="--nb:${c.b};--nl:${c.l};--nd:${c.d}"></button>`).join('')}</div>
+   <div class="kgrid" role="radiogroup" aria-label="今天的表情">${KAO.map(([f,l],i)=>`<button type="button" class="kchip${draft.k===i?' on':''}" data-i="${i}" role="radio" aria-checked="${draft.k===i}"><span class="kf">${esc(f)}</span><span class="kl">${l}</span></button>`).join('')}</div>
+   <div class="pact"><button class="stick" id="nsave" type="button">貼上去</button>${sel||n?`<button class="lnk" id="ncancel" type="button">先不要</button>`:''}${k!==TODAY&&!n?`<button class="lnk" id="unpin" type="button">拆掉這一針</button>`:''}</div></section>`}
+const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function render(){
+  if(typeof endSim==='function')SIM=null;
+  const [Y,M]=ym.split('-').map(Number),n=S.days.filter(k=>k.startsWith(ym)).length,s=streak(),doneT=has(TODAY);
+  document.getElementById('app').innerHTML=`
+  <div class="head"><h1 class="ttl" aria-label="一天一針">${[...'一天一針'].map((c,i)=>`<span class="pc p${i}" aria-hidden="true">${c}</span>`).join('')}</h1><div class="tape t2">${ym===THIS_YM?'這個月':M+'月'}釘了 ${n} 針</div>
+   <div class="sticker" aria-label="連續 ${s} 天"><div class="in"><div><span>連續</span><b>${s}</b><span>天</span></div></div></div></div>
+  <div class="mnav"><button class="tag" id="prev" aria-label="上個月">‹</button><span class="mlabel">${Y} 年 ${M} 月</span><button class="mus" id="mus" type="button" aria-pressed="${musicOn}" aria-label="背景音樂"><svg width="16" height="18" viewBox="0 0 16 18" aria-hidden="true"><path d="M5 14.5V3.2l9-2v11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><ellipse cx="3" cy="14.6" rx="2.6" ry="2" fill="currentColor"/><ellipse cx="12" cy="12.4" rx="2.6" ry="2" fill="currentColor"/></svg><span>${musicOn?"音樂播放中":"放點音樂"}</span></button><button class="tag" id="next" aria-label="下個月"${ym>=THIS_YM?' disabled':''}>›</button></div>${musicOn?`<div class="tracks" role="radiogroup" aria-label="選一首音樂">${TRACK_IDS.map(id=>`<button type="button" class="trk${id===track?' on':''}" data-tr="${id}" role="radio" aria-checked="${id===track}">${TRACKS[id].name}</button>`).join('')}</div>`:''}
+  ${board()}
+  <div class="info" id="info">${info}</div>
+  ${doneT?'':`<div class="act"><button class="go" id="go" type="button"><span>織今天這一針</span></button></div>`}
+  ${panel()}
+  ${doneT?`<div class="act"><div class="done">今天織好了<svg width="26" height="22" viewBox="0 0 26 22" aria-hidden="true"><path d="M2,12 L9,19 L24,3" fill="none" stroke="#57524c" stroke-width="2" stroke-linecap="round" filter="url(#pencil)"/></svg></div><button class="undo" id="undo" type="button">拆掉今天這一針</button></div>`:''}
+  <div class="save" id="save"></div>`;
+  freshNote=null;
+}
+
+let artifact=null,timer=null;
+const setSave=t=>{const e=document.getElementById('save');if(e)e.textContent=t};
+function buildDoc(){
+  const json=JSON.stringify({days:[...new Set(S.days)].sort(),notes:S.notes,at:S.at||Date.now()}).replace(/</g,'\\u003c');
+  return '<!DOCTYPE html>\n<html lang="zh-Hant">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n<title>一天一針</title>\n<link rel="preconnect" href="https://fonts.googleapis.com">\n<link href="https://fonts.googleapis.com/css2?family=Hina+Mincho&family=Iansui&family=Noto+Sans+TC:wght@400;900&family=Noto+Serif+TC:wght@900&family=LXGW+WenKai+TC&display=swap" rel="stylesheet">\n<style id="css">'+SRC_CSS+'</style>\n</head>\n<body>\n'+BG+'\n<main class="wrap" id="app"><h1>一天一針</h1></main>\n<script type="application/json" id="state">'+json+'<\/script>\n<script id="appjs">'+SRC_JS+'<\/script>\n</body>\n</html>\n';
+}
+let pending=false;
+function backup(){S.at=Date.now();try{localStorage.setItem('knit-days',JSON.stringify(S))}catch(e){}}
+async function flush(){if(!pending)return;if(!artifact){pending=false;return}pending=false;clearTimeout(timer);try{await artifact.publish(buildDoc())}catch(e){pending=true;setSave('沒存到，再按一次試試')}}
+function schedule(){
+  backup();pending=true;clearTimeout(timer);
+  if(musicOn&&artifact){setSave('已經記下了，關掉音樂或離開頁面時會存好');return}
+  timer=setTimeout(flush,3000)}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')flush()});
+window.addEventListener('pagehide',()=>{flush()});
+function add(k){if(k>TODAY||has(k))return;S.days.push(k);fresh=k;sel=null;edit=false;const [,m,d]=k.split('-').map(Number);info=k===TODAY?'今天這一針釘好了':`補上了${m}月${d}日`;render();fresh=null;schedule()}
+function remove(k){S.days=S.days.filter(x=>x!==k);delete S.notes[k];sel=null;edit=false;draft=null;const [,m,d]=k.split('-').map(Number);info=`${m}月${d}日的針拆掉了`;render();schedule()}
+
+document.addEventListener('click',e=>{
+  const g=e.target.closest('.hit');if(g){const k=g.dataset.k;if(has(k)){sel=k;edit=false;draft=null;info='';render();const p=document.querySelector('.panel');if(p)p.scrollIntoView({behavior:'smooth',block:'nearest'})}else add(k);return}
+  const b=e.target.closest('button');if(!b)return;
+  if(b.id==='mus'){musicOn=!musicOn;if(musicOn)startMusic();else{stopMusic();if(pending)setTimeout(flush,1500)}render();if(pending&&musicOn&&artifact)setSave('已經記下了，關掉音樂或離開頁面時會存好');return}
+  if(b.dataset.tr){if(b.dataset.tr!==track){track=b.dataset.tr;try{localStorage.setItem('knit-track',track)}catch(_){}if(musicOn){stopMusic();setTimeout(startMusic,250)}}render();return}
+  if(b.id==='go'){add(TODAY);return}
+  if(b.id==='undo'){if(confirmUndo){confirmUndo=false;remove(TODAY)}else{confirmUndo=true;b.textContent='再按一次就拆掉';setTimeout(()=>{confirmUndo=false;if(b.isConnected)b.textContent='拆掉今天這一針'},3000)}return}
+  if(b.classList.contains('pad')&&draft){draft.c=b.dataset.c;keepText();render();return}
+  if(b.classList.contains('kchip')&&draft){draft.k=+b.dataset.i;keepText();render();return}
+  if(b.id==='nsave'&&draft){keepText();const k=draft.day;S.notes[k]={k:draft.k,c:draft.c,t:[...draft.t].slice(0,20).join('')};freshNote=k;edit=false;draft=null;sel=k===TODAY?null:k;info='便利貼貼好了';render();schedule();return}
+  if(b.id==='ncancel'){edit=false;draft=null;if(!noteOf(sel))sel=null;render();return}
+  if(b.id==='nedit'){edit=true;draft=null;sel=sel||TODAY;render();return}
+  if(b.id==='ndel'){const k=sel||TODAY;delete S.notes[k];draft=null;edit=false;info='便利貼撕掉了';sel=null;render();schedule();return}
+  if(b.id==='unpin'&&sel){remove(sel);return}
+  if(b.id==='close'){sel=null;edit=false;render();return}
+  if(b.id==='prev'||b.id==='next'){const [y,m]=ym.split('-').map(Number);const d=new Date(y,m-1+(b.id==='next'?1:-1),1);ym=ymd(d).slice(0,7);if(ym>THIS_YM)ym=THIS_YM;info='';sel=null;render()}
+});
+let confirmUndo=false;
+// ---- yarn physics: grab a strand, pull it, let it swing back
+let SIM=null;
+function svgPt(svg,cx,cy){const m=svg.getScreenCTM();if(!m)return null;return new DOMPoint(cx,cy).matrixTransform(m.inverse())}
+function nearest(x,y){if(!BOARD)return null;let best=null;for(const st of BOARD.strands)for(const [px,py] of samples(st.d,4)){const d=Math.hypot(px-x,py-y);if(!best||d<best.d)best={d,st}}return best&&best.d<15?best.st:null}
+function nodesOf(d){const pts=samples(d,1),sg=segs(d),e=sg[sg.length-1];pts.push([e[6],e[7],0]);
+  const acc=[0];for(let i=1;i<pts.length;i++)acc.push(acc[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));
+  const L=acc[acc.length-1],N=Math.max(10,Math.round(L/6)),out=[];let j=0;
+  for(let i=0;i<=N;i++){const t=L*i/N;while(j<acc.length-2&&acc[j+1]<t)j++;const f=(t-acc[j])/((acc[j+1]-acc[j])||1),x=pts[j][0]+(pts[j+1][0]-pts[j][0])*f,y=pts[j][1]+(pts[j+1][1]-pts[j][1])*f;out.push({x,y,px:x,py:y,ox:x,oy:y})}
+  return {nodes:out,rest:L/N}}
+function pathOf(n){let d=`M${f1(n[0].x)},${f1(n[0].y)}`;for(let i=1;i<n.length-1;i++){const mx=(n[i].x+n[i+1].x)/2,my=(n[i].y+n[i+1].y)/2;d+=` Q${f1(n[i].x)},${f1(n[i].y)} ${f1(mx)},${f1(my)}`}const l=n[n.length-1];d+=` Q${f1(l.x)},${f1(l.y)} ${f1(l.x)},${f1(l.y)}`;return d}
+function startSim(svg,st,x,y){
+  const {nodes,rest}=nodesOf(st.d);let gi=0,bd=1e9;nodes.forEach((n,i)=>{const d=Math.hypot(n.x-x,n.y-y);if(d<bd){bd=d;gi=i}});
+  const fixed=new Set([nodes.length-1]);if(st.free!=='start')fixed.add(0);
+  const els=[...svg.querySelectorAll(`[data-s="${st.id}"] [data-l],[data-l][data-s="${st.id}"]`)].map(el=>({el,l:el.dataset.l,o:el.getAttribute('d')}));
+  SIM={st,svg,nodes,rest,fixed,grab:fixed.has(gi)?-1:gi,gx:x,gy:y,held:true,els};
+  try{navigator.vibrate&&navigator.vibrate(6)}catch(_){}
+  requestAnimationFrame(simStep)}
+function endSim(){if(!SIM)return;for(const e of SIM.els)e.el.setAttribute('d',e.o);SIM=null}
+function simStep(){
+  const S2=SIM;if(!S2||!S2.svg.isConnected){SIM=null;return}
+  const n=S2.nodes;
+  for(let sub=0;sub<2;sub++){
+    for(let i=0;i<n.length;i++){if(S2.fixed.has(i))continue;const dm=S2.held?.955:.9,p=n[i],vx=(p.x-p.px)*dm,vy=(p.y-p.py)*dm;p.px=p.x;p.py=p.y;
+      const k=S2.held?.004:.03;p.x+=vx+(p.ox-p.x)*k;p.y+=vy+(p.oy-p.y)*k+(S2.held?.09:0)}
+    if(S2.held&&S2.grab>=0){const g=n[S2.grab];g.x+=(S2.gx-g.x)*.6;g.y+=(S2.gy-g.y)*.6}
+    for(let it=0;it<8;it++)for(let i=0;i<n.length-1;i++){const a=n[i],b=n[i+1],dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy)||1,lim=S2.rest*1.06;
+      if(d>lim){const wa=S2.fixed.has(i)||(S2.held&&i===S2.grab)?0:1,wb=S2.fixed.has(i+1)||(S2.held&&i+1===S2.grab)?0:1,w=wa+wb;if(!w)continue;const c=(d-lim)/d;
+        a.x+=dx*c*wa/w;a.y+=dy*c*wa/w;b.x-=dx*c*wb/w;b.y-=dy*c*wb/w}}}
+  const d=pathOf(n),T=twist(d,2.8,S2.st.seed);
+  for(const e of S2.els)e.el.setAttribute('d',e.l==='cr'?T.c:e.l==='gr'?T.g:e.l==='hr'?T.h:d);
+  if(!S2.held){let m=0,v=0;for(const p of n){m=Math.max(m,Math.abs(p.x-p.ox)+Math.abs(p.y-p.oy));v=Math.max(v,Math.abs(p.x-p.px)+Math.abs(p.y-p.py))}
+    if(m<.25&&v<.04){endSim();return}}
+  requestAnimationFrame(simStep)}
+function yarnHit(e,cx,cy){const svg=e.target.closest&&e.target.closest('svg.board');if(!svg||e.target.closest('.hit'))return null;const p=svgPt(svg,cx,cy);if(!p)return null;const st=nearest(p.x,p.y);return st?{svg,st,p}:null}
+document.addEventListener('touchstart',e=>{const t=e.touches[0];if(t&&yarnHit(e,t.clientX,t.clientY))e.preventDefault()},{passive:false});
+document.addEventListener('pointerdown',e=>{const h=yarnHit(e,e.clientX,e.clientY);if(!h)return;e.preventDefault();endSim();startSim(h.svg,h.st,h.p.x,h.p.y);try{h.svg.setPointerCapture(e.pointerId)}catch(_){}});
+document.addEventListener('pointermove',e=>{if(!SIM||!SIM.held)return;const p=svgPt(SIM.svg,e.clientX,e.clientY);if(p){SIM.gx=p.x;SIM.gy=p.y}});
+const letGo=()=>{if(SIM)SIM.held=false};
+
+document.addEventListener('pointerup',letGo);document.addEventListener('pointercancel',letGo);
+
+// ---- calm everyday music, generated live with Web Audio (several tracks)
+const mf=m=>440*Math.pow(2,(m-69)/12);
+const rr=(a,b)=>a+Math.random()*(b-a);
+function mkImpulse(ac,sec){const r=ac.sampleRate,len=Math.floor(r*sec),b=ac.createBuffer(2,len,r);for(let c=0;c<2;c++){const d=b.getChannelData(c);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.6)}return b}
+function noiseBuf(ac,sec){const b=ac.createBuffer(1,Math.floor(ac.sampleRate*sec),ac.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;return b}
+function tone(ac,dest,type,f,t,vel,dur,o){o=o||{};const os=ac.createOscillator(),g=ac.createGain();os.type=type;os.frequency.value=f;os.detune.value=o.det!=null?o.det:rr(-4,4);
+  const a=o.a||.012;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vel,t+a);g.gain.exponentialRampToValueAtTime(.0006,t+dur);
+  let node=os;if(o.lp){const f2=ac.createBiquadFilter();f2.type='lowpass';f2.frequency.setValueAtTime(o.lp,t);if(o.lpTo)f2.frequency.exponentialRampToValueAtTime(o.lpTo,t+(o.lpT||.3));f2.Q.value=o.q||.7;os.connect(f2);node=f2}
+  node.connect(g);g.connect(dest);os.start(t);os.stop(t+dur+.05)}
+function bell(ac,dest,f,t,vel,dur,ratio){tone(ac,dest,'sine',f,t,vel,dur,{a:.004});tone(ac,dest,'sine',f*(ratio||4),t,vel*.22,dur*.3,{a:.002})}
+function hush(ac,dest,t,vel,dur,hp){const s=ac.createBufferSource();s.buffer=noiseBuf(ac,dur+.05);const f=ac.createBiquadFilter();f.type='highpass';f.frequency.value=hp||7000;const g=ac.createGain();g.gain.setValueAtTime(vel,t);g.gain.exponentialRampToValueAtTime(.0005,t+dur);s.connect(f);f.connect(g);g.connect(dest);s.start(t);s.stop(t+dur+.05)}
+function padTone(ac,dest,f,t,vel,dur){[0,-7,7].forEach(d=>tone(ac,dest,'sine',f,t,vel/3,dur,{a:dur*.35,det:d}))}
+
+const TRACKS={
+  piano:{name:'午後鋼琴',bpm:70,beats:4,wet:.34,lp:3600,
+    bar(ac,bus,t,i,b){const CH=[[53,57,60,64],[52,55,59,62],[57,60,64,67],[50,53,57,60]],RT=[41,40,45,38],P=[72,74,76,79,81,84,86],c=i%4;
+      CH[c].forEach((m,k)=>{tone(ac,bus,'triangle',mf(m+12),t+k*.035,.07,3.2);tone(ac,bus,'sine',mf(m),t+k*.035,.06,3.4)});
+      CH[c].forEach((m,k)=>tone(ac,bus,'triangle',mf(m+12),t+b*2.5+k*.03,.04,2.2));
+      tone(ac,bus,'sine',mf(RT[c]+12),t,.16,b*3.6);tone(ac,bus,'sine',mf(RT[c]+19),t+b*2,.08,b*1.8);
+      for(let e=0;e<8;e++)if(Math.random()<.26)bell(ac,bus,mf(P[Math.floor(Math.random()*P.length)]),t+e*b/2+rr(0,.02),rr(.06,.1),1.3)},
+    amb(ac,out){const s=ac.createBufferSource(),b=ac.createBuffer(1,ac.sampleRate*2,ac.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*(Math.random()<.0006?6:.25);
+      s.buffer=b;s.loop=true;const hp=ac.createBiquadFilter();hp.type='highpass';hp.frequency.value=1800;const g=ac.createGain();g.gain.value=.012;s.connect(hp);hp.connect(g);g.connect(out);s.start();return [s]}},
+  box:{name:'音樂盒',bpm:92,beats:3,wet:.45,lp:6000,
+    bar(ac,bus,t,i,b){const CH=[[60,64,67],[57,60,64],[53,57,60],[55,59,62]],c=i%4,n=CH[c],pat=[0,1,2,3,2,1];
+      pat.forEach((k,e)=>{const m=(k===3?n[0]+12:n[k])+12;bell(ac,bus,mf(m),t+e*b/2+rr(0,.012),.085,1.6,4.2)});
+      if(i%2===0){const top=[76,79,81,84,86][Math.floor(Math.random()*5)];bell(ac,bus,mf(top+12),t+rr(0,b*2),.06,2,3.9)}
+      tone(ac,bus,'sine',mf(n[0]-12),t,.05,b*3,{a:.2})},
+    amb(){return []}},
+  rain:{name:'雨天窗邊',bpm:54,beats:4,wet:.5,lp:2400,
+    bar(ac,bus,t,i,b){const CH=[[50,54,57,61,64],[47,50,54,57,61],[43,47,50,54,57],[45,49,52,57,59]],c=i%4,P=[74,76,78,81,83,86];
+      CH[c].forEach(m=>padTone(ac,bus,mf(m),t,.05,b*4.6));tone(ac,bus,'sine',mf(CH[c][0]-12),t,.12,b*4,{a:.6});
+      const k=1+Math.floor(Math.random()*3);for(let j=0;j<k;j++){const m=P[Math.floor(Math.random()*P.length)];tone(ac,bus,'sine',mf(m),t+rr(.3,b*3.6),.07,3.2,{a:.006});tone(ac,bus,'sine',mf(m)*2,t+rr(.3,b*3.6),.012,1.2,{a:.006})}},
+    amb(ac,out){const s=ac.createBufferSource();s.buffer=noiseBuf(ac,3);s.loop=true;const lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.value=1400;const hp=ac.createBiquadFilter();hp.type='highpass';hp.frequency.value=380;
+      const g=ac.createGain();g.gain.value=.05;s.connect(lp);lp.connect(hp);hp.connect(g);g.connect(out);s.start();
+      const s2=ac.createBufferSource(),b=ac.createBuffer(1,ac.sampleRate*3,ac.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()<.00035?(Math.random()*2-1)*.9:0;
+      s2.buffer=b;s2.loop=true;const bp=ac.createBiquadFilter();bp.type='bandpass';bp.frequency.value=2600;bp.Q.value=1.2;const g2=ac.createGain();g2.gain.value=.5;s2.connect(bp);bp.connect(g2);g2.connect(out);s2.start();return [s,s2]}},
+  walk:{name:'散步',bpm:92,beats:4,wet:.22,lp:5200,
+    bar(ac,bus,t,i,b){const CH=[[52,55,59,64],[52,57,60,67],[53,57,60,65],[53,55,59,65]],RT=[36,45,38,43],c=i%4,sw=b*.56;
+      const strum=(tt,v)=>CH[c].forEach((m,k)=>tone(ac,bus,'sawtooth',mf(m),tt+k*.016,v,.9,{lp:2800,lpTo:500,lpT:.35}));
+      strum(t,.035);strum(t+b*1.5,.026);strum(t+b*2.5,.03);strum(t+b*3.5,.022);
+      tone(ac,bus,'sine',mf(RT[c]+12),t,.18,b*.9);tone(ac,bus,'sine',mf(RT[c]+19),t+b*2,.14,b*.9);tone(ac,bus,'sine',mf(RT[c]+24),t+b*3,.1,b*.6);
+      for(let e=0;e<4;e++){hush(ac,bus,t+e*b,.018,.06);hush(ac,bus,t+e*b+sw,.011,.05)}
+      if(Math.random()<.5){const P=[76,79,81,84];bell(ac,bus,mf(P[Math.floor(Math.random()*4)]),t+b*rr(0,3),.05,1.1,3)}},
+    amb(){return []}}
+};
+const TRACK_IDS=Object.keys(TRACKS);
+function buildChain(ac,tr,dest){
+  const out=ac.createGain();out.connect(dest);
+  const lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.value=tr.lp;lp.Q.value=.4;
+  const bus=ac.createGain();bus.gain.value=.9;bus.connect(lp);
+  const dry=ac.createGain();dry.gain.value=.8;const wet=ac.createGain();wet.gain.value=tr.wet;const cv=ac.createConvolver();cv.buffer=mkImpulse(ac,3);
+  lp.connect(dry);dry.connect(out);lp.connect(cv);cv.connect(wet);wet.connect(out);
+  return {out,bus}}
+let AC=null,MUS=null,musicOn=false,track='piano';
+window.__knit={board:()=>BOARD,samples,sim:()=>SIM,music:()=>MUS&&AC&&AC.state};
+try{const t=localStorage.getItem('knit-track');if(t&&TRACKS[t])track=t}catch(_){}
+function startMusic(){
+  try{if(navigator.audioSession)navigator.audioSession.type='playback'}catch(_){}
+  AC=AC||new (window.AudioContext||window.webkitAudioContext)();try{AC.resume()}catch(_){}
+  try{const b=AC.createBuffer(1,1,22050),src=AC.createBufferSource();src.buffer=b;src.connect(AC.destination);src.start(0)}catch(_){}
+  const master=AC.createGain();master.gain.setValueAtTime(0,AC.currentTime);master.gain.linearRampToValueAtTime(.95,AC.currentTime+2);
+  let el=null;
+  try{if(AC.createMediaStreamDestination&&window.MediaStream){const dest=AC.createMediaStreamDestination();master.connect(dest);el=document.createElement('audio');el.setAttribute('playsinline','');el.srcObject=dest.stream;
+    el.play().catch(()=>{try{master.disconnect(dest)}catch(_){}master.connect(AC.destination);el=null})}else master.connect(AC.destination)}catch(_){master.connect(AC.destination);el=null}
+  const tr=TRACKS[track],{out,bus}=buildChain(AC,tr,master),srcs=tr.amb(AC,out),beat=60/tr.bpm;let bar=0,next=AC.currentTime+.2;
+  const sched=()=>{while(next<AC.currentTime+1.6){tr.bar(AC,bus,next,bar,beat);next+=beat*tr.beats;bar++}};
+  sched();MUS={master,srcs,el,timer:setInterval(sched,200)}}
+function stopMusic(){if(!MUS)return;const m=MUS;MUS=null;clearInterval(m.timer);const t=AC.currentTime;m.master.gain.cancelScheduledValues(t);m.master.gain.setValueAtTime(m.master.gain.value,t);m.master.gain.linearRampToValueAtTime(0,t+1.2);
+  setTimeout(()=>{try{m.srcs.forEach(x=>x.stop());m.master.disconnect();if(m.el){m.el.pause();m.el.srcObject=null}}catch(_){}},1400)}
+
+function keepText(){const t=document.getElementById('nt');if(t&&draft)draft.t=t.value}
+document.addEventListener('input',e=>{if(e.target.id==='nt'){let v=e.target.value;if([...v].length>20){v=[...v].slice(0,20).join('');e.target.value=v}if(draft)draft.t=v;const c=document.getElementById('cnt');if(c)c.textContent=[...v].length+'/20'}});
+document.addEventListener('keydown',e=>{const g=e.target.closest&&e.target.closest('.hit');if(g&&(e.key==='Enter'||e.key===' ')){e.preventDefault();g.click()}});
+render();
+(async()=>{try{if(window.claude&&window.claude.use)artifact=await window.claude.use('artifact')}catch(e){}
+  try{const l=JSON.parse(localStorage.getItem('knit-days')||'null');
+    if(l&&Array.isArray(l.days)&&(l.at||0)>(S.at||0)&&(l.days.length||Object.keys(l.notes||{}).length)){S.days=l.days;S.notes=l.notes||{};S.at=l.at;render();if(artifact){pending=true;setTimeout(flush,1200)}}}catch(e){}})();
+}
+</script>
+</body>
+</html>
